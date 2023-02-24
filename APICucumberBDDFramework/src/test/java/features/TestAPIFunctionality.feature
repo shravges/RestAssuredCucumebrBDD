@@ -1,6 +1,6 @@
 Feature: Test if the APIs are functioning as expected
 
-@API_Test
+@Regression
 Scenario Outline: Test Add Place API with customized data
 Given AddPlaceAPI payload with "<name>", "<address>" ,"<language>"
 When user hits "AddPlaceAPI" with httprequest "POST" 
@@ -19,8 +19,7 @@ Examples:
 |london|uk|english|
 |indore|mp|hindi|
 
-
-@1API_Test1
+@Sanity
 Scenario: Test Add Place API with normal data
 Given AddPlaceAPI payload 
 When user hits "AddPlaceAPI" with httprequest "POST" 
