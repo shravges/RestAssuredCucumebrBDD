@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features="src/test/java/features",glue= {"stepDefination"}, 
-monochrome = true, strict = true, tags = {"@Sanity"}, plugin = {"pretty", "json:target/jsonReports/cucumber-report.json"})
+monochrome = true, strict = true, tags = {"@LibrayAPI"}, plugin = {"pretty", "json:target/jsonReports/cucumber-report.json"})
 public class TestRunner 
 {
 

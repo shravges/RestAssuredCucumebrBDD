@@ -137,7 +137,7 @@ public class getRequestBody
 	{
 		try
 		{
-		FileInputStream fis=new FileInputStream("C://InputData//AddBookAPI_InputData.xls");
+		FileInputStream fis=new FileInputStream("src/test/java/Utils/AddBookAPI_InputData.xls");
 		HSSFWorkbook workbook=new HSSFWorkbook(fis);
 		HSSFSheet sheet =  workbook.getSheet(sheetName);
 		
