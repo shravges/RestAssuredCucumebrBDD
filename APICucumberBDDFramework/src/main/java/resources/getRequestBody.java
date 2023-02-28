@@ -24,8 +24,8 @@ public class getRequestBody
 	HashMap<String,String> testCaseData = new HashMap<String, String>();
 	HashMap<String,HashMap<String,String>> allData = new HashMap<String,HashMap<String,String>>();
 	HashMap<String,String> innerData = new HashMap<String, String>();
-	public static String libraryAPIInputDataFile = "src/test/java/Utils/AddBookAPI_InputData.xls";
-	public static String propertyFilePath = "src/test/java/Utils/globalProperties.properties";
+	public final String libraryAPIInputDataFile = "src/test/java/Utils/AddBookAPI_InputData.xls";
+	public final String propertyFilePath = "src/test/java/Utils/globalProperties.properties";
 	
 	public static addPlace addPlacePayload(String name, String address, String language)
 	{
