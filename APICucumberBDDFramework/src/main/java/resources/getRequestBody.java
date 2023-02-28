@@ -24,6 +24,8 @@ public class getRequestBody
 	HashMap<String,String> testCaseData = new HashMap<String, String>();
 	HashMap<String,HashMap<String,String>> allData = new HashMap<String,HashMap<String,String>>();
 	HashMap<String,String> innerData = new HashMap<String, String>();
+	public static String libraryAPIInputDataFile = "src/test/java/Utils/AddBookAPI_InputData.xls";
+	public static String propertyFilePath = "src/test/java/Utils/globalProperties.properties";
 	
 	public static addPlace addPlacePayload(String name, String address, String language)
 	{
@@ -97,7 +99,7 @@ public class getRequestBody
 	{
 		try
 		{
-		FileInputStream fis=new FileInputStream("C://InputData//AddBookAPI_InputData.xls");
+		FileInputStream fis=new FileInputStream(libraryAPIInputDataFile);
 		HSSFWorkbook workbook=new HSSFWorkbook(fis);
 		HSSFSheet sheet =  workbook.getSheet(sheetName);
 		
@@ -137,7 +139,7 @@ public class getRequestBody
 	{
 		try
 		{
-		FileInputStream fis=new FileInputStream("src/test/java/Utils/AddBookAPI_InputData.xls");
+		FileInputStream fis=new FileInputStream(libraryAPIInputDataFile);
 		HSSFWorkbook workbook=new HSSFWorkbook(fis);
 		HSSFSheet sheet =  workbook.getSheet(sheetName);
 		
@@ -177,7 +179,7 @@ public class getRequestBody
 	public String getProperties(String propertyName) throws IOException
 	{
 		Properties prop = new Properties();
-		FileInputStream fis = new FileInputStream("src/test/java/Utils/globalProperties.properties");
+		FileInputStream fis = new FileInputStream(propertyFilePath);
 		prop.load(fis);
 		//get the value from file
 		return prop.getProperty(propertyName);
