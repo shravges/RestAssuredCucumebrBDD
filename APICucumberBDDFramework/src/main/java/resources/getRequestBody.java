@@ -1,17 +1,26 @@
 package resources;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Row;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import pojo.Location;
 import pojo.addPlace;
-import pojo.deletePlace;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class getRequestBody 
 {
-	
+	HashMap<String,String> testCaseData = new HashMap<String, String>();
+	HashMap<String,HashMap<String,String>> allData = new HashMap<String,HashMap<String,String>>();
+	HashMap<String,String> innerData = new HashMap<String, String>();
 	
 	public static addPlace addPlacePayload(String name, String address, String language)
 	{
@@ -81,5 +90,89 @@ public class getRequestBody
 	}
 	
 	
+	public HashMap<String,String> getDataFromExcel(String testCaseName, String sheetName)
+	{
+		try
+		{
+		FileInputStream fis=new FileInputStream("C://InputData//AddBookAPI_InputData.xls");
+		HSSFWorkbook workbook=new HSSFWorkbook(fis);
+		HSSFSheet sheet =  workbook.getSheet(sheetName);
+		
+		System.out.println("Total rows in sheet" + sheetName + "are" + sheet.getLastRowNum());
+		
+		//assuming 0th row is headers row
+		for(int i=1;i<=sheet.getLastRowNum();i++)
+		{
+			Row headerRow = sheet.getRow(0);
+			Row currentRow =  sheet.getRow(i);
+			
+			//check if 1st column == test case name provide by user
+			if(currentRow.getCell(0).getStringCellValue().equalsIgnoreCase(testCaseName))
+					{
+						System.out.println("Test data found for mentioned test case");
+						int totalCellCount = currentRow.getLastCellNum();
+						System.out.println("Total columns =" +totalCellCount);
+						for(int j=1;j<totalCellCount; j++)
+						{
+							String key = headerRow.getCell(j).getStringCellValue();
+							String value = currentRow.getCell(j).getStringCellValue();
+							testCaseData.put(key, value);
+						}
+					}
+		}
+		
+	}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return testCaseData;
+	}
+	
+	
+	public HashMap<String, HashMap<String, String>> getAllDataFromExcel(String sheetName)
+	{
+		try
+		{
+		FileInputStream fis=new FileInputStream("C://InputData//AddBookAPI_InputData.xls");
+		HSSFWorkbook workbook=new HSSFWorkbook(fis);
+		HSSFSheet sheet =  workbook.getSheet(sheetName);
+		
+		System.out.println("Total rows in sheet" + sheetName + "are" + sheet.getLastRowNum());
+		
+		//assuming 0th row is headers row
+		for(int i=1;i<=sheet.getLastRowNum();i++)
+		{
+			HashMap<String,String> innerData = new HashMap<String, String>();
+			Row headerRow = sheet.getRow(0);
+			Row currentRow =  sheet.getRow(i);
+			System.out.println("Considering data for test case" +currentRow.getCell(0).getStringCellValue());
+			int totalCellCount = currentRow.getLastCellNum();
+			//System.out.println("Total columns =" +totalCellCount);
+			for(int j=1;j<totalCellCount; j++)
+			{
+				String key = headerRow.getCell(j).getStringCellValue();
+				String value = currentRow.getCell(j).getStringCellValue();
+				innerData.put(key, value);
+			}
+			
+			allData.put(currentRow.getCell(0).getStringCellValue(), innerData);		
+			
+		}
+		
+		//System.out.println("All data received from excel =" +allData);
+		
+	}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return allData;
+	}
+	
+	
+	
 	
 }
+	
+
