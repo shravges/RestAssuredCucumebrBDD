@@ -1,5 +1,6 @@
 package stepDefination;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,29 +27,24 @@ public class LibraryAPIDetails extends RequestResponseSpecifications
 	APIResources apiResources;
 	HashMap<String,HashMap<String,String>> allData = new HashMap<String,HashMap<String,String>>();
 		
-	
-	
 	@Given("all books created from data sheet {string}")
-	public void all_books_created_from_data_sheet(String sheetName)
+	public void all_books_created_from_data_sheet(String sheetName) throws IOException
 	{
+		apiResources = APIResources.valueOf("AddBookAPI");
 		allData = grb.getAllDataFromExcel(sheetName);
 		for (Map.Entry<String,HashMap<String,String>> entry : allData.entrySet())   
 		{  
 			System.out.println("All test data received =" +allData);
-			//System.out.println("test case: " + entry.getKey() + ", value: " + entry.getValue());
 			HashMap<String,String> innerData = entry.getValue();
-			//System.out.println(innerData);
 			
-			Response response = given().baseUri("http://216.10.245.166").body(innerData).when().post("/Library/Addbook.php")
+			Response response = given().baseUri(grb.getProperties("BOOKS_BASE_URI")).body(innerData).when().post(apiResources.getResource())
 					.then().extract().response();
 			
 			System.out.println("ID created for Test case:" + entry.getKey() + " = " + getRequestBody.getValueFromResponse(response, "ID"));
 			System.out.println("Message received for Test case:" + entry.getKey() + " = " +getRequestBody.getValueFromResponse(response, "Msg"));
-			
 		}  
 	}
 
-	
 	@Then("user able to create book")
 	public void user_able_to_create_book() {
 	    // Write code here that turns the phrase above into concrete actions

@@ -1,9 +1,12 @@
 package resources;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.poi.ss.usermodel.Row;
 import io.restassured.path.json.JsonPath;
@@ -169,6 +172,20 @@ public class getRequestBody
 		}
 		return allData;
 	}
+	
+	
+	public String getProperties(String propertyName) throws IOException
+	{
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream("src/test/java/Utils/globalProperties.properties");
+		prop.load(fis);
+		//get the value from file
+		return prop.getProperty(propertyName);
+	
+	}
+	
+	
+	
 	
 	
 	

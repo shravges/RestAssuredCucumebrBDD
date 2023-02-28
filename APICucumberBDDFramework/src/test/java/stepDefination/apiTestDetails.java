@@ -3,6 +3,8 @@ package stepDefination;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -24,7 +26,7 @@ public class apiTestDetails extends RequestResponseSpecifications
 	static String placeId;
 	
 	@Given("AddPlaceAPI payload")
-	public void add_place_api_payload() 
+	public void add_place_api_payload() throws IOException 
 	{
 		addPlaceReqSpec = given().spec(requestSpecification())
 				   .body(getRequestBody.addPlacePayload());	
@@ -32,14 +34,14 @@ public class apiTestDetails extends RequestResponseSpecifications
 	}
 
 	@Given("AddPlaceAPI payload with {string}, {string} ,{string}")
-	public void addplaceapi_payload_with(String name, String address, String language)
+	public void addplaceapi_payload_with(String name, String address, String language) throws IOException
 	{
 		addPlaceReqSpec = given().spec(requestSpecification())
 				   .body(getRequestBody.addPlacePayload(name, address, language));
 	}
 	
 	@Given("get place api")
-	public void get_place_api() 
+	public void get_place_api() throws IOException 
 	{
 		addPlaceReqSpec = given().spec(requestSpecification());
 	}
@@ -58,7 +60,7 @@ public class apiTestDetails extends RequestResponseSpecifications
 	
 	
 	@When("user hits {string} with httprequest {string}")
-	public void user_hits_with_httprequest(String api, String requestType)
+	public void user_hits_with_httprequest(String api, String requestType) throws IOException
 	{
 		apiResources = APIResources.valueOf(api);
 		
